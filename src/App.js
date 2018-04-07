@@ -9,7 +9,8 @@ class App extends Component {
             {name: "Max", age: 28},
             {name: "Manu", age: 29},
             {name: "Marcin", age: 34}
-        ]
+        ],
+        showPersons: false
     };
 
     switchNameHandler = (newName) => {
@@ -36,6 +37,12 @@ class App extends Component {
         })
     };
 
+    togglePersonsHandler = () => {
+        this.setState((prevState) => ({
+            showPersons: !prevState.showPersons
+        }))
+    };
+
     render() {
         const style = {
             backgroundColor: 'yellow',
@@ -45,17 +52,39 @@ class App extends Component {
             cursor: 'pointer'
         };
 
+        let persons = null;
+
+        if (this.state.showPersons) {
+            persons = (
+                <div>
+                    <Person person={this.state.persons[0]} click={this.switchNameHandler.bind(this, "Maxik")}/>
+                    <Person person={this.state.persons[1]} click={this.switchNameHandler.bind(this, "Max!!")}>My hobbies: Racing!</Person>
+                    <Person person={this.state.persons[2]} click={this.switchNameHandler.bind(this, "Maaaarcin")} changed={this.nameChangedHandler}/>
+                </div>
+            )
+        }
+
         return (
             <div className="app">
                 <h1>Hi, I'm React App</h1>
                 <p>This is really working!</p>
 
-                <button style={style} onClick={this.switchNameHandler.bind(this, "Maximilian")}>Switch name</button>
+                <button style={style} onClick={this.togglePersonsHandler.bind(this)}>Show Persons</button>
+                {/*<button style={style} onClick={this.switchNameHandler.bind(this, "Maximilian")}>Switch name</button>*/}
                 {/* OPTIONAL but inefficient <button onClick={() => this.switchNameHandler("Maximillian!!!")}>Switch name</button>*/}
 
-                <Person person={this.state.persons[0]} click={this.switchNameHandler.bind(this, "Maxik")} />
-                <Person person={this.state.persons[1]} click={this.switchNameHandler.bind(this, "Max!!")}>My hobbies: Racing!</Person>
-                <Person person={this.state.persons[2]} click={this.switchNameHandler.bind(this, "Maaaarcin")} changed={this.nameChangedHandler} />
+                {/*{this.state.showPersons ?*/}
+                    {/*<div>*/}
+                        {/*<Person person={this.state.persons[0]} click={this.switchNameHandler.bind(this, "Maxik")}/>*/}
+                        {/*<Person person={this.state.persons[1]} click={this.switchNameHandler.bind(this, "Max!!")}>My*/}
+                            {/*hobbies: Racing!</Person>*/}
+                        {/*<Person person={this.state.persons[2]} click={this.switchNameHandler.bind(this, "Maaaarcin")}*/}
+                                {/*changed={this.nameChangedHandler}/>*/}
+                    {/*</div>*/}
+                    {/*: null*/}
+                {/*}*/}
+
+                {persons}
             </div>
         );
 
