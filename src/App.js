@@ -57,9 +57,9 @@ class App extends Component {
         if (this.state.showPersons) {
             persons = (
                 <div>
-                    <Person person={this.state.persons[0]} click={this.switchNameHandler.bind(this, "Maxik")}/>
-                    <Person person={this.state.persons[1]} click={this.switchNameHandler.bind(this, "Max!!")}>My hobbies: Racing!</Person>
-                    <Person person={this.state.persons[2]} click={this.switchNameHandler.bind(this, "Maaaarcin")} changed={this.nameChangedHandler}/>
+                    {this.state.persons.map((element, index) => {
+                        return <Person key={index} person={element} click={this.switchNameHandler.bind(this, "Maxik")} changed={this.nameChangedHandler} />
+                    })}
                 </div>
             )
         }
