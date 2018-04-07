@@ -6,41 +6,64 @@ import Person from './Person/Person';
 class App extends Component {
     state = {
         persons: [
-            {name: "Max", age: 28},
-            {name: "Manu", age: 29},
-            {name: "Marcin", age: 34}
+            {id: 1, name: "Max", age: 28},
+            {id: 2, name: "Manu", age: 29},
+            {id: 3, name: "Marcin", age: 34}
         ],
         showPersons: false
     };
 
-    switchNameHandler = (newName) => {
-        // console.log('click');
+    // switchNameHandler = (newName) => {
+    //     // console.log('click');
+    //
+    //     // DON'T DO THIS this.state.persons[0].name = "Maximilian";
+    //
+    //     this.setState({
+    //         persons: [
+    //             {id: 1, name: newName, age: 28},
+    //             {id: 2, name: "Manu", age: 29},
+    //             {id: 3, name: "Marcin", age: 32}
+    //         ]
+    //     })
+    // }
 
-        // DON'T DO THIS this.state.persons[0].name = "Maximilian";
+    nameChangedHandler = (event, id) => {
+        const personIndex = this.state.persons.findIndex(p => {
+            return p.id === id;
+        });
+
+        // IMPORTANT!!! prevents mutating original object
+        const person = {
+            ...this.state.persons[personIndex]
+        };
+        // alternative:
+        // const person = Object.assign({}, this.state.persons[personIndex]);
+        // DO NOT USE:
+        // const person = this.state.persons[personIndex];
+
+        person.name = event.target.value;
+
+        const persons = [...this.state.persons];
+        persons[personIndex] = person;
 
         this.setState({
-            persons: [
-                {name: newName, age: 28},
-                {name: "Manu", age: 29},
-                {name: "Marcin", age: 32}
-            ]
-        })
-    };
-
-    nameChangedHandler = (event) => {
-        this.setState({
-            persons: [
-                {name: "Maximilian", age: 28},
-                {name: event.target.value, age: 29},
-                {name: "Marcin", age: 32}
-            ]
-        })
+            persons: persons
+        });
     };
 
     togglePersonsHandler = () => {
         this.setState((prevState) => ({
             showPersons: !prevState.showPersons
         }))
+    };
+
+    deletePersonHandler(index) {
+        const persons = [...this.state.persons];
+        persons.splice(index, 1);
+
+        this.setState({
+            persons: persons
+        });
     };
 
     render() {
@@ -58,7 +81,10 @@ class App extends Component {
             persons = (
                 <div>
                     {this.state.persons.map((element, index) => {
-                        return <Person key={index} person={element} click={this.switchNameHandler.bind(this, "Maxik")} changed={this.nameChangedHandler} />
+                        return <Person key={element.id} person={element}
+                                       click={this.deletePersonHandler.bind(this, index)}
+                                       // click={() => this.deletePersonHandler(index)}
+                                       changed={(event) => this.nameChangedHandler(event, element.id)} />
                     })}
                 </div>
             )
