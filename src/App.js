@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 // import Radium, {StyleRoot} from 'radium';
 
-import './App.css';
+import classes from './App.css';
 
 import Person from './Person/Person';
 
@@ -101,15 +101,15 @@ class App extends Component {
         const pClass = [];
 
         if (this.state.persons.length <= 2) {
-            pClass.push('red');
+            pClass.push(classes.red);
         }
 
         if (this.state.persons.length <= 1) {
-            pClass.push('bold');
+            pClass.push(classes.bold);
         }
 
         return (
-            <div className="app">
+            <div className={classes.app}>
                 <h1>Hi, I'm React App</h1>
                 <p className={pClass.join(' ')}>This is really working!</p>
 
