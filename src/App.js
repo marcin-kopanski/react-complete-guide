@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+// import Radium, {StyleRoot} from 'radium';
+
 import './App.css';
 
 import Person from './Person/Person';
@@ -68,7 +70,7 @@ class App extends Component {
 
     render() {
         const style = {
-            backgroundColor: 'yellow',
+            backgroundColor: 'green',
             font: 'inherit',
             border: '1px solid blue',
             padding: '8px',
@@ -87,13 +89,29 @@ class App extends Component {
                                        changed={(event) => this.nameChangedHandler(event, element.id)} />
                     })}
                 </div>
-            )
+            );
+
+            style.backgroundColor = 'red';
+            style[':hover'] = {
+                backgroundColor: 'salmon',
+                color: 'black'
+            };
+        }
+
+        const pClass = [];
+
+        if (this.state.persons.length <= 2) {
+            pClass.push('red');
+        }
+
+        if (this.state.persons.length <= 1) {
+            pClass.push('bold');
         }
 
         return (
             <div className="app">
                 <h1>Hi, I'm React App</h1>
-                <p>This is really working!</p>
+                <p className={pClass.join(' ')}>This is really working!</p>
 
                 <button style={style} onClick={this.togglePersonsHandler.bind(this)}>Show Persons</button>
                 {/*<button style={style} onClick={this.switchNameHandler.bind(this, "Maximilian")}>Switch name</button>*/}
