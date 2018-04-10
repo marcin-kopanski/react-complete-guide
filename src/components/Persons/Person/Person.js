@@ -26,12 +26,6 @@ class Person extends Component {
 	render() {
 		console.log('[Person.js] Inside render()');
 
-		// const rnd = Math.random();
-		//
-		// if (rnd > 0.7) {
-		//     throw new Error('Something went wrong!');
-		// }
-
 		return (
 			<React.Fragment>
 				<p onClick={this.props.click}>I'm a {this.props.person.name} and I am {this.props.person.age} years
