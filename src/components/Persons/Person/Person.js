@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 // import Radium from 'radium';
 
 import WithClassComponent from '../../../hoc/WithClassComponent';
@@ -17,6 +18,7 @@ class Person extends Component {
 
 	componentDidMount() {
 		console.log('[Person.js] Inside componentDidMount()');
+		if (this.props.position === 0) this.inputElement.focus();
 	}
 
 	componentWillUnmount() {
@@ -31,10 +33,24 @@ class Person extends Component {
 				<p onClick={this.props.click}>I'm a {this.props.person.name} and I am {this.props.person.age} years
 					old!</p>
 				<p>{this.props.children}</p>
-				<input type="text" onChange={this.props.changed} defaultValue={this.props.person.name}/>
+				<input
+					ref={(inp) => {this.inputElement = inp}}
+					type="text"
+					onChange={this.props.changed}
+					defaultValue={this.props.person.name}/>
 			</React.Fragment>
 		)
 	}
+}
+
+Person.propTypes = {
+	click: PropTypes.func,
+	changed: PropTypes.func,
+	person: PropTypes.shape({
+		id: PropTypes.number,
+		name: PropTypes.string,
+		age: PropTypes.number
+	})
 }
 
 export default WithClassComponent(Person, classes.Person);

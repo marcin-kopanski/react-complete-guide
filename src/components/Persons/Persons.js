@@ -46,6 +46,7 @@ class Persons extends PureComponent {
 
 		return this.props.persons.map((element, index) => {
 			return <Person key={element.id} person={element}
+						   position={index}
 						   click={() => this.props.clicked(index)}
 						   changed={(event) => this.props.changed(event, element.id)}/>
 		});
