@@ -10,6 +10,7 @@ class Person extends Component {
 		super(props);
 
 		console.log('[Person.js] Inside Constructor');
+		this.inputElement = React.createRef();
 	}
 
 	componentWillMount() {
@@ -18,11 +19,15 @@ class Person extends Component {
 
 	componentDidMount() {
 		console.log('[Person.js] Inside componentDidMount()');
-		if (this.props.position === 0) this.inputElement.focus();
+		// if (this.props.position === 0) this.inputElement.current.focus();
 	}
 
 	componentWillUnmount() {
 		console.log('[Person.js] Inside componentWillUnmount()');
+	}
+
+	focus() {
+		this.inputElement.current.focus();
 	}
 
 	render() {
@@ -34,7 +39,7 @@ class Person extends Component {
 					old!</p>
 				<p>{this.props.children}</p>
 				<input
-					ref={(inp) => {this.inputElement = inp}}
+					ref={this.inputElement}
 					type="text"
 					onChange={this.props.changed}
 					defaultValue={this.props.person.name}/>
